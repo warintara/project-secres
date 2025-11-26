@@ -1,0 +1,17 @@
+services:
+  server:
+    image: mcr.microsoft.com/devcontainers/base:noble
+    command: ["sleep", "infinity"]
+    volumes:
+      - ./:/workspace:rw
+    working_dir: /workspace
+
+  client:
+    image: mcr.microsoft.com/devcontainers/base:noble
+    command: ["sleep", "infinity"]
+    volumes:
+      - ./:/workspace:rw
+    working_dir: /workspace
+
+networks:
+  private_net:
