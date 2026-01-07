@@ -1,0 +1,45 @@
+hashfunction H;
+
+protocol Schnorr(Client, Server)
+{
+  role Client
+  {
+    secret a;
+    fresh v: Nonce;
+    var c: Nonce;
+    fresh V;
+    fresh r;
+    send_1(Client, Server, V);
+    recv_2(Server, Client, c);
+
+    send_3(Client, Server, r);
+
+     /* Accord injectif : le client termine - > vérification de rejeu */
+    claim(Client, Commit, Server, V, c, r);
+
+    claim(Client, Secret, a);
+    claim(Client, Alive);
+  }
+
+  role Server
+  {
+    fresh c: Nonce;
+    var V;
+    var r;
+    fresh resp;
+
+    recv_1(Client, Server, V);
+    send_2(Server, Client, c);
+    recv_3(Client, Server, r);
+	
+    match(V, H(r, c));
+
+    /* Accord injectif : le serveur participe - > vérification pour rejeu*/
+    claim(Server, Running, Client, V, c, r);
+
+    claim(Server, Alive);
+    claim(Server, Weakagree);
+    claim(Server, Niagree);
+    claim(Server, Nisynch);
+  }
+}

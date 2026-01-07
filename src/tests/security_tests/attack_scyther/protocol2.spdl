@@ -1,0 +1,48 @@
+hashfunction H;
+
+protocol SchnorrNIZKP(Client, Server)
+{
+  role Client
+  {
+    secret a;
+    const A;
+    const g;
+    const userid;
+    const otherinfo;
+
+    fresh c: Nonce;
+    fresh r: Nonce;
+
+    /* c = H(g || V || A || user_id || other_info) */
+    send_1(Client, Server, userid, otherinfo, c, r);
+
+    claim(Client, Commit, Server, userid, otherinfo, c, r);
+
+    claim(Client, Secret, a);
+    claim(Client, Alive);
+  }
+
+  role Server
+  {
+    const A;
+    const g;
+    const userid;
+    const otherinfo;
+
+    var c: Nonce;
+    var r: Nonce;
+
+    recv_1(Client, Server, userid, otherinfo, c, r);
+
+    /* Vérification symbolique */
+    match(c, H(g, A, userid, otherinfo, r));
+
+    claim(Server, Running, Client, userid, otherinfo, c, r);
+
+
+    claim(Server, Alive);
+    claim(Server, Weakagree);
+    claim(Server, Niagree);
+    claim(Server, Nisynch);
+  }
+}
