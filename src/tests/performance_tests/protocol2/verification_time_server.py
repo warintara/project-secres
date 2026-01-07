@@ -4,7 +4,7 @@ import hashlib
 import time
 import logging
 
-logging.basicConfig(filename='nizkp_server_perf.log', level=logging.INFO, format='%(asctime)s - %(message)s')
+logging.basicConfig(filename='../log/nizkp_server_perf.log', level=logging.INFO, format='%(asctime)s - %(message)s')
 # ============================
 # Schnorr parameters (toy)
 # ============================
