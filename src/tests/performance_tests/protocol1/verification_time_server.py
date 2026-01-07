@@ -3,6 +3,9 @@ import socket
 import secrets
 import time
 import logging
+
+# Configuration du logging pour le serveur
+logging.basicConfig(filename='../log/zkp_server_perf.log', level=logging.INFO,format='%(asctime)s - %(message)s')
 # ============================
 # Schnorr parameters (toy)
 # ============================
@@ -32,12 +35,7 @@ A = 128       # public key = G**a mod P, with a secret on client side
 HOST = "0.0.0.0"   # listen on all interfaces
 PORT = 5000        # change if you want
 
-# Configuration du logging pour le serveur
-logging.basicConfig(
-    filename='server_perf.log', 
-    level=logging.INFO,
-    format='%(asctime)s - %(message)s'
-)
+
 
 def handle_client(conn, addr):
     """

@@ -3,6 +3,9 @@ import socket
 import secrets
 import time
 import logging
+
+# Configuration du logging pour le client
+logging.basicConfig(filename='../log/zkp_client_perf.log', level=logging.INFO,format='%(asctime)s - %(message)s')
 # ============================
 # Schnorr parameters (toy)
 # ============================
@@ -34,12 +37,7 @@ SERVER_PORT = 5000         # must match server PORT
 
 
 
-# Configuration du logging pour le client
-logging.basicConfig(
-    filename='client_perf.log', 
-    level=logging.INFO,
-    format='%(asctime)s - %(message)s'
-)
+
 
 def schnorr_prove_once():
     """
